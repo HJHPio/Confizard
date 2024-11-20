@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+
+.pattern {
+  background-image: url("hex.svg");
+  background-repeat: repeat;
+  width: 100%;
+  z-index: 10;
+}
+/* Bg gradient */
+@keyframes gradient-bg-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.gradient-bg {
+  background: linear-gradient(
+    -45deg,
+    #FF5500,
+    #FF0055,
+    #0055FF,
+    #00FFD4
+  );
+  background-size: 500% 500%;
+  animation: gradient-bg-animation 15s ease infinite;
+  z-index: 0;
+}
+
+.pattern-mist {
+  background: rgba(0, 0, 0, 0);
+  z-index: 1;
+  transition: background 0.5s ease;
+  
+}
+
+.mist-overlay {
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  transition: background 0.5s ease;
+  mask-repeat: no-repeat;  
+  overflow-y: auto; 
+  min-height: 100vh; 
+}
+
+.logo-mist-overlay {
+  background: rgb(255, 255, 255); 
+  height: 80px;
+  width: 80px;
+  left: 19px;
+  top: 19px;
+  z-index: 1;
+  transition: background 0.5s ease;
+  mask-image: url(hjhp.svg);
+  mask-repeat: no-repeat;  
+
+}
+
+.pattern,
+.pattern-mist,
+.gradient-bg {
+  height: 100vh; 
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+ 
+    --muted: 220 100% 50%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+ 
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --accent: 170 100% 50%;
+    --accent-foreground: 170 100% 25%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 0 0% 3.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 0 0% 83.1%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

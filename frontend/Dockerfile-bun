@@ -1,0 +1,15 @@
+# Compare default bun build and serve server
+FROM oven/bun:1.1.33-alpine AS builder
+WORKDIR /app
+COPY package.json bun.lockb ./
+RUN ["bun", "i"]
+COPY . .
+RUN ["bunx", "--bun", "vite", "build", "--outDir", "dist"]
+
+FROM oven/bun:1.1.33-alpine AS final
+WORKDIR /app
+COPY --from=builder /app/dist ./dist
+COPY bun-server.js ./bun-server.js
+CMD ["bun", "run", "bun-server.js", "3333"]
+EXPOSE 3333
+# 116MB oven/bun:1.1.33-alpine

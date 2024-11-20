@@ -1,0 +1,7 @@
+- Add release date (See CHANGELOG.md)
+- Deploy minimal confizard image to dockerhub (See steps.default.yaml)
+- Make filtering sensitive values configurable (See SettingsTable.vue)
+- Make configuration steps removable from navigation stepper (See StepContent.vue)
+- Improve navigation stepper icons (See StepperNavigation.vue)
+- Fill Readme (See Readme.md)
+- Add Sentry integration

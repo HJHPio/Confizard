@@ -1,0 +1,97 @@
+{
+  "wizard": {
+    "configurationWizard": "Confizard",
+    "previous": "Previous",
+    "next": "Next",
+    "last": "Finish",
+    "skip": "Skip",
+    "downloadScript": "Download Script",
+    "filterBySettingName": "Filter by setting name...",
+    "filterBySettingValue": "Filter by setting value...",
+    "fieldRequired": "This field is required.",
+    "fillRequiredFields": "Please fill in all required fields before proceeding.",
+    "warn" : {
+      "unexpected" :{
+        "translation_type": "Unexpected field translation type."
+      }
+    },
+    "apply": "Apply"
+  },
+  "install": {
+    "installCommand": "You can install the script using the following command:",
+    "copy": "Copy",
+    "commandCopied": "Command copied to clipboard!",
+    "commandCopiedError": "Failed to copy command.",
+    "generatingScript": "Generating script...",
+    "generatedScript": "Script generated successfully!",
+    "generateScriptFirst": "Please generate the script first.",
+    "commandNotAvailable": "Install command not available",
+    "scriptCopied": "Script copied to clipboard!",
+    "copyError": "Failed to copy script.",
+    "viewScript": "View Generated Script",
+    "copyScript": "Copy Script"
+  },
+  "settings": {
+    "setting": "Setting",
+    "value": "Value",
+    "noResults": "No results found."
+  },
+  "hide": "Hide",
+  "show": "Show",
+  "field" : {
+    "configurable" : {
+      "label": "Configuration field"
+    },
+    "config": {
+      "set": {
+        "name": "Set field name",
+        "label": "Set field label",
+        "type": "Set field type",
+        "default": "Set default field value",
+        "description": "Set field description",
+        "multiplier": "Set field multiplier"
+      },
+      "isSensitive": "Is field sensitive?",
+      "isObligatory": "Is field obligatory?",
+      "isConfigurable": "Is field configurable?"
+    }
+  },
+  "step": {
+    "autoSetupWithDocker" :{
+      "title": "Local deployment",
+      "description": "Automatically use configuration to deploy Confizard locally",
+      "deployLocally": "Run app locally automatically?",
+      "deployLocallyDesc": "Setting to start docker container with currently set configuration."
+    },
+    "config": {
+      "set": {
+        "title": "Set step title",
+        "description": "Set step description",
+        "icon": "Set step icon",
+        "multiplier": "Set step multiplier",
+        "isConfigurable": "Is step configurable?",
+        "fieldsNumber": "Number of step fields",
+        "stepsNumber": "Number of configuration steps to add after current"
+      },
+      "placeholders":{
+        "added" :{
+          "step": "Added configurable stel",
+          "desc": "This step is configurable step"
+        },
+        "script": "Step script"
+      }
+    },
+    "intro" : {
+      "title": "Welcome",
+      "description": "Please follow the steps to configure the application."
+    },
+    "configurable": {
+      "title": "Step configuration",
+      "description": "Fill data fields in order to configure step."
+    },
+    "finish": {
+      "title": "Finalization",
+      "description": "Review your settings and generate the script."
+    }
+  }
+}

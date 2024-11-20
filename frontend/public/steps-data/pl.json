@@ -1,0 +1,97 @@
+{
+  "wizard": {
+    "configurationWizard": "Confizard",
+    "previous": "Poprzedni",
+    "next": "Następny",
+    "last": "Koniec",
+    "skip": "Pomiń",
+    "downloadScript": "Pobierz skrypt",
+    "filterBySettingName": "Filtruj ustawienia...",
+    "filterBySettingValue": "Filtruj wartości...",
+    "fieldRequired": "To pole jest wymagane.",
+    "fillRequiredFields": "Proszę wypełnić wszystkie wymagane pola przed kontynuacją.",
+    "warn" : {
+      "unexpected" :{
+        "translation_type": "Nieoczekiwany typ tłumaczenia pola."
+      }
+    },
+    "apply": "Zastosuj"
+  },
+  "install": {
+    "installCommand": "Możesz zainstalować skrypt używając następującej komendy:",
+    "copy": "Kopiuj",
+    "commandCopied": "Komenda skopiowana do schowka!",
+    "commandCopiedError": "Nie udało się skopiować komendy.",
+    "generatingScript": "Generowanie skryptu...",
+    "generatedScript": "Skrypt wygenerowany pomyślnie!",
+    "generateScriptFirst": "Proszę najpierw wygenerować skrypt.",
+    "commandNotAvailable": "Komenda instalacji niedostępna",
+    "scriptCopied": "Skrypt skopiowany do schowka!",
+    "copyError": "Nie udało się skopiować skryptu.",
+    "viewScript": "Zobacz wygenerowany skrypt",
+    "copyScript": "Skopiuj skrypt"
+  },
+  "settings": {
+    "setting": "Ustawienie",
+    "value": "Wartość",
+    "noResults": "Brak wyników."
+  },
+  "hide": "Ukryj",
+  "show": "Pokaż",
+  "field" : {
+    "configurable" : {
+      "label": "Pole konfiguracyjne"
+    },
+    "config": {
+      "set": {
+        "name": "Ustawienie nazwy pola",
+        "label": "Ustawienie etykiety pola",
+        "type": "Ustawienie typu pola",
+        "default": "Ustawienie domyślnej wartości pola",
+        "description": "Ustawienie opisu pola",
+        "multiplier": "Ustawienie zwielokrotnienia pola"
+      },
+      "isSensitive": "Czy pole jest wrażliwe?",
+      "isObligatory": "Czy pole jest wymagane?",
+      "isConfigurable": "Czy pole jest konfigurowalne?"
+    }
+  },
+  "step": {
+    "autoSetupWithDocker" :{
+      "title": "Lokalne uruchomienie",
+      "description": "Automatycznie użyć wygenerowanej configuracji przy użyciu dockera do lokalnego uruchomienia",
+      "deployLocally": "Uruchomić aplikację automatycznie?",
+      "deployLocallyDesc": "Ustawienie, czy dodać do skryptu automatyczne uruchomienie kontenera z konfiguracją."
+    },
+    "config": {
+      "set": {
+        "title": "Ustawienie tytułu kroku",
+        "description": "Ustawienie opisu kroku",
+        "icon": "Ustawienie ikony kroku",
+        "multiplier": "Ustawienie zwielokrotnienia kroku",
+        "isConfigurable": "Czy krok jest konfigurowalny?",
+        "fieldsNumber": "Ustawienie liczby pól kroku",
+        "stepsNumber": "Ustawienie liczby konfiguracyjnych kroków do dodania po aktualnym"
+      },
+      "placeholders":{
+        "added" :{
+          "step": "Dodany krok konfiguracyjny",
+          "desc": "Dany krok jest krokiem konfiguracyjnym umożliwiającym tworzenie formularza"
+        },
+        "script": "Skrypt kroku"
+      }
+    },
+    "intro" : {
+      "title": "Witaj",
+      "description": "Proszę postępować zgodnie z krokami, aby skonfigurować aplikację."
+    },
+    "configurable": {
+      "title": "Konfiguracja kroku",
+      "description": "Uzupełnij dane, aby utworzyć krok."
+    },
+    "finish": {
+      "title": "Finalizacja",
+      "description": "Przejrzyj swoje ustawienia i wygeneruj skrypt."
+    }
+  }
+}

@@ -1,0 +1,115 @@
+- id: 0
+  title: "step.intro.title"
+  description: "step.intro.description"
+  icon: "BookOpenIcon"
+  fields: []
+  script: |
+    echo 'Welcome to ConfigWizard'
+    echo 'This script will configure your Own Configuration Wizzard'
+
+- id: 1
+  title: "step.configurable.title"
+  description: "step.configurable.description"
+  icon: "CircleStackIcon"
+  multiplier: 0
+  configurable: true
+  fields: []
+  script: |
+    # This function convert environment variables into YAML format
+    generate_yaml() {
+      local step_id=$1
+      echo "- id: ${step_id}"
+
+      # Dynamically constructing and expanding the environment variable
+      local title_var="STEP_${step_id}_CS_TITLE"
+      local description_var="STEP_${step_id}_CS_DESCRIPTION"
+      local icon_var="STEP_${step_id}_CS_ICON"
+      local multiplier_var="STEP_${step_id}_CS_MULTIPLIER"
+      local configurable_var="STEP_${step_id}_CS_CONFIGURABLE"
+      local script_var="STEP_${step_id}_CS_SCRIPT"
+
+      echo "  title: \"${!title_var}\""
+      echo "  description: \"${!description_var}\""
+      echo "  icon: \"${!icon_var:-CheckIcon}\""
+      echo "  multiplier: ${!multiplier_var:-0}"
+      echo "  configurable: ${!configurable_var:-false}"
+      echo "  fields:"
+
+      # Dynamically detecting the fields for this step
+      local field_vars=$(compgen -v | grep "^STEP_${step_id}_FIELD_.*_CS_LOCAL_FIELD_CF_NAME$")
+      local field_ids=()
+      for field_var in $field_vars; do
+        # Extracting the field index from the variable name
+        local field_index=$(echo "$field_var" | sed -E "s/^STEP_${step_id}_FIELD_([0-9]+)_CS_LOCAL_FIELD_CF_NAME$/\1/")
+        field_ids+=("$field_index")
+      done
+
+      # Sorting the field IDs numerically
+      IFS=$'\n' field_ids=($(sort -n <<<"${field_ids[*]}"))
+      unset IFS
+
+      # Generating YAML for each field
+      for field_id in "${field_ids[@]}"; do
+        local name_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_NAME"
+        local label_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_LABEL"
+        local type_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_TYPE"
+        local default_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_DEFAULT"
+        local description_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_DESCRIPTION"
+        local obligatory_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_OBLIGATORY"
+        local sensitive_var="STEP_${step_id}_FIELD_${field_id}_CS_LOCAL_FIELD_CF_SENSITIVE"
+
+        echo "    - name: \"${!name_var}\""
+        echo "      label: \"${!label_var}\""
+        echo "      type: \"${!type_var}\""
+        if [[ -n "${!default_var}" ]]; then
+          echo "      default: \"${!default_var}\""
+        fi
+        if [[ -n "${!description_var}" ]]; then
+          echo "      description: \"${!description_var}\""
+        fi
+        echo "      obligatory: ${!obligatory_var:-false}"
+        echo "      sensitive: ${!sensitive_var:-false}"
+      done
+      echo "  script: |"
+      printf "%s\n" "${!script_var}" | sed 's/^/    /'
+    }
+
+    # Generate YAML for all steps
+    output_file="steps.default.yaml"
+    > $output_file
+
+    for step_id in {1..10}; do
+      step_var="STEP_${step_id}_CS_TITLE"
+      if [[ -n "${!step_var}" ]]; then
+        generate_yaml $step_id >> $output_file
+      fi
+    done
+
+    echo "Generated steps YAML file: $output_file"
+
+- id: 2
+  title: "step.autoSetupWithDocker.title"
+  description: "step.autoSetupWithDocker.description"
+  icon: "CheckIcon"
+  fields: 
+    - name: "autoSetupWithDocker"
+      label: "step.autoSetupWithDocker.deployLocally"
+      type: "checkbox"
+      default: false
+      description: "step.autoSetupWithDocker.deployLocallyDesc"
+      obligatory: false
+      sensitive: false
+  script: |
+    echo 'Deploying locally configuration wizard with docker: ' $autoSetupWithDocker
+    # TODO deploy confizard image
+    if [[ $autoSetupWithDocker ]]; then
+      echo "Deploying locally..."
+      docker run -d -p 8080:5173 --name local-confizard -v ./steps.default.yaml:/etc/nginx/html/zero/steps-data/steps.default.yaml wizard-app-frontend
+    fi
+
+- id: 3
+  title: "step.finish.title"
+  description: "step.finish.description"
+  icon: "CheckIcon"
+  fields: []
+  script: "echo 'Final step completed in ConfigWizard'"
