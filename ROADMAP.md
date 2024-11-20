@@ -3,5 +3,7 @@
 - Make filtering sensitive values configurable (See SettingsTable.vue)
 - Make configuration steps removable from navigation stepper (See StepContent.vue)
 - Improve navigation stepper icons (See StepperNavigation.vue)
+- Add documentation
 - Fill Readme (See Readme.md)
 - Add Sentry integration
+- Add field type selector support 
