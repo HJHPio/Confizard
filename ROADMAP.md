@@ -1,9 +1,8 @@
-- Add release date (See CHANGELOG.md)
-- Deploy minimal confizard image to dockerhub (See steps.default.yaml)
+- Deploy & Publish Initial Release at 2024-12-06. Unlock confizard urls (CF Zero Trust).
+
+- Add Sentry integration and badges to readme
+- Add more project images
+- Add field type selector support for configurable fields
 - Make filtering sensitive values configurable (See SettingsTable.vue)
 - Make configuration steps removable from navigation stepper (See StepContent.vue)
 - Improve navigation stepper icons (See StepperNavigation.vue)
-- Add documentation
-- Fill Readme (See Readme.md)
-- Add Sentry integration
-- Add field type selector support 

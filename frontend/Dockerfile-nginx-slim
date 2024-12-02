@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json bun.lockb ./
 RUN ["bun", "i"]
 COPY . .
-RUN ["bunx", "--bun", "vite", "build", "--outDir", "dist"]
+RUN ["env", "NODE_ENV=production", "bunx", "--bun", "vite", "build", "--outDir", "dist"]
 
 FROM nginx:mainline-alpine3.20-slim
 RUN rm /etc/nginx/conf.d/default.conf

@@ -1,10 +1,13 @@
 <template>
     <Toaster />
     <div class="gradient-bg">
-      <div class="pattern w-full">
-        <div class="pattern-mist w-full">
-          <div class="mist-overlay w-full" ref="mistOverlay" @mousemove="handleMouseMove">
-            <div class="min-w-screen h-screen text-white flex flex-col items-center">
+      <div class="pattern">
+        <div class="pattern-mist">
+          <div class="mist-overlay" ref="mistOverlay" @mousemove="handleMouseMove"/>
+        </div>
+      </div>
+    </div>
+    <div class="min-w-screen h-full w-full text-white flex flex-col items-center relative z-20" @mousemove="handleMouseMove">
               <div class="logo-mist-overlay absolute m-0"></div>
               <LocalePicker />
               <!-- Stepper Navigation -->
@@ -36,10 +39,6 @@
                 </CardContent>
               </Card>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </template>
   
   <script setup lang="ts">
@@ -301,16 +300,15 @@
     // Mouse move effect
     const mistOverlay = ref<HTMLElement | null>(null);
     const debounceOptions: DebounceFilterOptions = {
-      maxWait: 100
+      maxWait: 16,
     };
     const handleMouseMove = useDebounceFn((e: MouseEvent) => {
       if (mistOverlay.value) {
-        mistOverlay.value.style.maskImage = `
-          radial-gradient(circle 5em at ${e.x}px ${e.y}px, transparent 0.1%, black 99.9%)
-        `;
+        mistOverlay.value.style.setProperty('--mouse-x', `${e.x}px`);
+        mistOverlay.value.style.setProperty('--mouse-y', `${e.y}px`);
       } else {
         console.warn('mistOverlay is not available yet');
       }
-    }, 5, debounceOptions);
+    }, 16, debounceOptions);
   </script>
   

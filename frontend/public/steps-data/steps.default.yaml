@@ -103,8 +103,8 @@
     echo 'Deploying locally configuration wizard with docker: ' $autoSetupWithDocker
     # TODO deploy confizard image
     if [[ $autoSetupWithDocker ]]; then
-      echo "Deploying locally..."
-      docker run -d -p 8080:5173 --name local-confizard -v ./steps.default.yaml:/etc/nginx/html/zero/steps-data/steps.default.yaml wizard-app-frontend
+      echo "Deploying locally on port 8080 (see http://127.0.0.1:8080 after)..."
+      docker run -d -p 8080:80 --name local-confizard -v ./steps.default.yaml:/etc/nginx/html/zero/steps-data/steps.default.yaml hjhp/confizard:latest
     fi
 
 - id: 3

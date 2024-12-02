@@ -1,0 +1,118 @@
+# We do this to prevent invoking pipeline on gitlab.com mirror
+workflow:
+  rules:
+    - if: '$ENABLE_PROJECT_PIPELINE == "true"'
+
+image:              
+  name:             oven/bun:1.1.33-alpine
+  pull_policy:      if-not-present
+
+variables:
+  REGISTRY_NAME:            'hjhp'
+  PROJECT_NAME:             'confizard'
+  PROJECT_VERSION:          '0.0.0'
+  DOCKERHUB_REPO:           '${REGISTRY_NAME}/${PROJECT_NAME}'
+  INITIAL_CONTAINER_TAG:    '${DOCKERHUB_REPO}:${PROJECT_VERSION}-'
+
+stages:
+  - install
+  - build
+  - deploy
+  - publish
+
+# We do this as separate job for node_modules scan in future
+install-node-dependencies:
+  image: oven/bun:1.1.33-alpine
+  stage: install
+  before_script:
+    - cd ./frontend
+  script:
+    - bun i --frozen-lockfile
+  artifacts:
+    when: always
+    paths:
+      - frontend/node_modules 
+    expire_in: 1 day
+  only:
+    - main
+
+# This job must be called pages for GitLab Pages integration
+pages: 
+  image: oven/bun:1.1.33-alpine
+  stage: build
+  dependencies:
+    - install-node-dependencies
+  before_script:
+    - cd ./frontend
+  script:
+    - env NODE_ENV=production bunx --bun vite build --outDir dist
+    - mv ./dist ../public
+  # We need artifacts in /public for GitLab Pages integration
+  artifacts:
+    when: always
+    paths:
+      - public
+  only:
+    - main
+
+cloudflare-pages:
+  image: oven/bun:1.1.38
+  stage: deploy
+  dependencies:
+    - pages
+  script:
+    - bun i -g wrangler@3.91.0 --save-dev
+    - >
+      bunx wrangler pages deploy 
+      ./public 
+      --project-name="$CLOUDFLARE_PROJECT_NAME" 
+      --commit-hash="$CI_COMMIT_SHA"
+      --commit-message="$CI_COMMIT_MESSAGE"
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
+dockerize:
+  stage: publish
+  image:              
+    name:             docker:27.3.1-cli-alpine3.20
+    pull_policy:      if-not-present
+  # Using additional image in order to use docker commangs 
+  services:           
+    - name:           docker:27.3.1-dind-alpine3.20
+      pull_policy:    if-not-present
+      command:        [ "dockerd", "--host=tcp://0.0.0.0:2375" ]
+      alias:          docker
+  before_script:
+    - echo ${DOCKERHUB_READ_WRITE_TOKEN} | docker login -u ${REGISTRY_NAME} --password-stdin
+    - cd ./frontend
+  script:
+    # These pulls allow us to use older images as cache layers
+    - docker pull "${INITIAL_CONTAINER_TAG}dev" || true
+    - docker pull "${INITIAL_CONTAINER_TAG}bun-1.1.33-alpine" || true
+    - docker pull "${INITIAL_CONTAINER_TAG}nginx-1.27.2-bookworm" || true
+    - docker pull hjhp/confizard:latest || true
+    - |
+      docker build \
+      --cache-from "${INITIAL_CONTAINER_TAG}dev" \
+      --tag "${INITIAL_CONTAINER_TAG}dev" -f Dockerfile .
+    - |
+      docker build \
+      --cache-from "${INITIAL_CONTAINER_TAG}bun-1.1.33-alpine" \
+      --tag "${INITIAL_CONTAINER_TAG}bun-1.1.33-alpine" -f Dockerfile-bun .
+    - |
+      docker build \
+      --cache-from "${INITIAL_CONTAINER_TAG}nginx-1.27.2-bookworm" \
+      --tag "${INITIAL_CONTAINER_TAG}nginx-1.27.2-bookworm" -f Dockerfile-nginx .
+    - |
+      docker build \
+      --cache-from hjhp/confizard:latest \
+      --tag "${INITIAL_CONTAINER_TAG}nginx-mainline-alpine3.20-slim" \
+      --tag "${INITIAL_CONTAINER_TAG}prod" \
+      --tag hjhp/confizard:latest \
+      -f Dockerfile-nginx-slim .
+    - docker push --all-tags ${DOCKERHUB_REPO}
+  only:
+    - main
