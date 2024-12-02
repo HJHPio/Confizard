@@ -6,3 +6,4 @@ This project uses the following tools and technologies:
 - [Bun](https://bun.sh/)
 - [Vue](https://vuejs.org/)
 - [Vite](https://vite.dev/)
+- [shadcn-vue - a port of shadcn to vue](https://www.shadcn-vue.com/)
