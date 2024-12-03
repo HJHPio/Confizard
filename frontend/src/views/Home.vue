@@ -7,7 +7,7 @@
         </div>
       </div>
     </div>
-    <div class="min-w-screen h-full w-full text-white flex flex-col items-center relative z-20" @mousemove="handleMouseMove">
+    <div class="h-screen w-screen text-white flex flex-col items-center relative z-20" @mousemove="handleMouseMove">
               <div class="logo-mist-overlay absolute m-0"></div>
               <LocalePicker />
               <!-- Stepper Navigation -->

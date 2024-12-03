@@ -67,7 +67,7 @@ docker run -it --name confizard-app -p 80:80 -v ./steps-data:/etc/nginx/html/zer
 Every open-source project, to be quickly reusable by others, needs its own configuration wizard that shows end users how to configure the project and step-by-step explanation of the installation process. Confizard project aims for that specific field to provide a solution suitable for all projects: a configurable (and auto-configurable) wizard. Its solutions focus on using environments and scripts to provide an easy-to-maintain and understandable process. An Free and Open Source Software project author can provide end users with a simple form where based on user input translated then to system environments the final app can be automatically configured, installed and deployed based on user choices. It should never send data outside (the entire process should be encapsulated within the user's browser to ensure that no sensitive environment variables are leaked). Bug tracking features should only send data externally in testing environments.
 
 ## Gallery  
-![Intro](./gallery/intro-v0.0.0-2024-12-02.png)
+![Intro](./IMGs/gallery/intro-v0.0.0-2024-12-02.png)
 <!-- TODO: Add more project images -->
 
 ## Roadmap
