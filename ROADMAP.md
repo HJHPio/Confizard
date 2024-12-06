@@ -1,5 +1,3 @@
-- Deploy & Publish Initial Release at 2024-12-06. Unlock confizard urls (CF Zero Trust).
-
 - Add Sentry integration and badges to readme
 - Add more project images
 - Add field type selector support for configurable fields
