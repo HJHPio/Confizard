@@ -10,7 +10,7 @@ image:
 variables:
   REGISTRY_NAME:            'hjhp'
   PROJECT_NAME:             'confizard'
-  PROJECT_VERSION:          '0.0.0'
+  PROJECT_VERSION:          '0.0.1'
   DOCKERHUB_REPO:           '${REGISTRY_NAME}/${PROJECT_NAME}'
   INITIAL_CONTAINER_TAG:    '${DOCKERHUB_REPO}:${PROJECT_VERSION}-'
 
